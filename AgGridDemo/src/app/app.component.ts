@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from './product.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,11 +15,11 @@ export class AppComponent implements OnInit {
   gridColumnApi: any;
   rowData: any[];
   pagination = {
-  currentPage: 1,
-  lastRow: null,
+    currentPage: 1,
+    lastRow: null,
     pageSize: 10,
     lastpageNumber: 1
-  
+
   };
   filterString: string;
   sortString: string = '';
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit {
   }
 
   loadData(filter?: string, sortString?: string) {
-    this.productService.getProducts(1000000000, "&page=" + this.pagination.currentPage + ("&filter=" + (filter ? filter : '')) + "&Sorting=" + (sortString ? sortString :'')).subscribe((res: any) => {
+    this.productService.getProducts(1000000000, "&page=" + this.pagination.currentPage + ("&filter=" + (filter ? filter : '')) + "&Sorting=" + (sortString ? sortString : '')).subscribe((res: any) => {
       this.columnDefs = [];
       if (res.fieldInfo) {
         res.fieldInfo.forEach((field: any) => {
@@ -44,17 +45,17 @@ export class AppComponent implements OnInit {
     this.loadData(this.filterString, this.sortString);
   }
   ngOnInit(): void {
-   
+
   }
   onFilterModified($event) {
     let filter = $event.api.getFilterModel();
     this.filterString = '';
     Object.keys(filter).forEach((key: string) => {
       if (!this.filterString) {
-        this.filterString = key + '=' + '"'+(filter[key]['filter']).toString()+'"';
+        this.filterString = key + '=' + '"' + (filter[key]['filter']).toString() + '"';
       }
       else {
-        this.filterString += 'and' + key + '=' + '"' + (filter[key]['filter']).toString() + '"' ;
+        this.filterString += 'and' + key + '=' + '"' + (filter[key]['filter']).toString() + '"';
       }
     })
   }
@@ -68,13 +69,13 @@ export class AppComponent implements OnInit {
       prop = prop.substr(0, prop.length - 2);
     }
     if (!this.sortDirection) {
-      this .sortDirection = sort[0].sort;
+      this.sortDirection = sort[0].sort;
     }
-   
+
     if (this.sortString.indexOf(prop) > -1) {
       this.sortDirection = this.sortDirection == "asc" ? "desc" : "asc";
     }
-    this.sortString = this.sortDirection != "asc" ? "-" + prop :  prop;
+    this.sortString = this.sortDirection != "asc" ? "-" + prop : prop;
     this.loadData(this.filterString, this.sortString)
   }
   onPaginationChanged() {
@@ -84,7 +85,22 @@ export class AppComponent implements OnInit {
         this.pagination.lastpageNumber = this.pagination.currentPage;
         this.loadData(this.filterString, this.sortString);
       }
+    }
   }
-}
+  openDialog(event) {
+    console.log(event);
+    //let modal = this.modalService.open(QuickViewModal);
+  }
 };
+
+@Component({
+  selector: 'quickview',
+  template: `
+<div>test</div>
+`,
+
+})
+export class QuickViewModal {
+
+}
 

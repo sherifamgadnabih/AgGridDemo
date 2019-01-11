@@ -13,6 +13,7 @@
                  (filterChanged)="onFilterChanged()"
                  [floatingFilter]="true"
                 [rowSelection]="'multiple'"
+                  (rowClicked)="openDialog($event)"
                  (sortChanged)="onSortChanged($event)">
   
 </ag-grid-angular>
